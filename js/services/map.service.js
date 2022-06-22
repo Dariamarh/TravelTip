@@ -4,6 +4,8 @@ export const mapService = {
     initMap,
     addMarker,
     onClickMap,
+    setLocation,
+    geoSearch,
 
 }
 
@@ -34,11 +36,28 @@ function onClickMap(pos){
 
 }
 
-function addMarker(loc) {
+function setLocation(pos, title){
+    console.log('setting location', pos)
+    const center = {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+      }
+      gMap.setCenter(center)
+      new google.maps.Marker({
+          position: center,
+          map: gMap,
+          title, 
+        }) 
+
+}
+
+
+
+function addMarker(loc, title) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!'
+        title
     });
     return marker;
 }
@@ -59,3 +78,14 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+function geoSearch(value) {
+    const API_KEY = 'AIzaSyCfW4zSavY4AJeMwNyqMBVFWttBi1iHd9Q'
+    console.log('Getting geolocation from search', value);
+
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${API_KEY}`)
+    .then(res => res.data)
+
+}
+    
+

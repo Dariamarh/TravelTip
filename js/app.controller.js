@@ -7,8 +7,11 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onSearch = onSearch
+window.onCopyLink = onCopyLink
 
 function onInit() {
+
     mapService.initMap()
         .then(() => {
             console.log('Map is ready');
@@ -32,7 +35,7 @@ function onAddMarker() {
 function onGetLocs() {
     locService.getLocs()
         .then(locs => {
-            console.log('Locations:', locs)
+            console.log('Locations:', locs)                
             document.querySelector('.locs').innerText = JSON.stringify(locs)
         })
 }
@@ -40,7 +43,8 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            console.log('User position is:', pos.coords);
+            console.log('your position is:', pos.coords);
+            mapService.setLocation(pos, 'You are here')    
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
         })
@@ -51,4 +55,34 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+
+function onSearch(ev){
+    if (ev) ev.preventDefault()
+    const elInputSearch = document.querySelector('input[name=search]')
+    console.log(elInputSearch.value)
+    mapService.geoSearch(elInputSearch.value)
+        .then(res => console.log(res))
+
+        // .then(pos => {
+        //     console.log('User search position is:', pos.coords);
+        //     mapService.setLocation(pos, , title)    
+        // })
+        // .catch(err => {
+        //     console.log('err!!!', err);
+        // })
+}
+
+
+
+
+function onCopyLink(value){
+  
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(value);
+    
+    /* Alert the copied text */
+    alert("Copied the text: " + value);
+
 }
