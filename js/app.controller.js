@@ -1,5 +1,6 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
+import { storageService } from './services/util-service.js'
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
@@ -10,7 +11,7 @@ window.onGetUserPos = onGetUserPos;
 function onInit() {
     mapService.initMap()
         .then(() => {
-            console.log('Map is ready')
+            console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
 }
