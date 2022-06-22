@@ -10,6 +10,8 @@ window.onGetUserPos = onGetUserPos;
 window.onSearch = onSearch
 window.onCopyLink = onCopyLink
 
+var gLastPos  
+
 function onInit() {
 
     mapService.initMap()
@@ -62,27 +64,35 @@ function onSearch(ev){
     if (ev) ev.preventDefault()
     const elInputSearch = document.querySelector('input[name=search]')
     console.log(elInputSearch.value)
+
     mapService.geoSearch(elInputSearch.value)
-        .then(res => console.log(res))
+        .then(pos => { gLastPos = pos
+            mapService.setSearchLocation(pos,elInputSearch.value )})
 
-        // .then(pos => {
-        //     console.log('User search position is:', pos.coords);
-        //     mapService.setLocation(pos, , title)    
-        // })
-        // .catch(err => {
-        //     console.log('err!!!', err);
-        // })
+       
 }
 
 
 
 
-function onCopyLink(value){
-  
-    /* Copy the text inside the text field */
-    navigator.clipboard.writeText(value);
+function onCopyLink(){
+
+    const pos = gLastPos
+    console.log('gLastPos', gLastPos)
+    // pos= {
+    //     lat: 35.6895,
+   
     
-    /* Alert the copied text */
-    alert("Copied the text: " + value);
+    const queryStringParams = `?lat=${pos.lat}&lng=${pos.lng}`
+    const newUrl = 'https://dariamarh.github.io/TravelTip/' + queryStringParams
+    
+    
+    navigator.clipboard.writeText(newUrl);
+    alert("Link Copied: " + newUrl);
 
 }
+
+
+
+
+  
