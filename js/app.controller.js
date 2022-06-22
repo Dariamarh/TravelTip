@@ -11,6 +11,8 @@ window.onGetUserPos = onGetUserPos;
 window.onSearch = onSearch
 window.onCopyLink = onCopyLink
 
+var gLastPos  
+
 function onInit() {
 
     mapService.initMap()
@@ -63,16 +65,12 @@ function onSearch(ev){
     if (ev) ev.preventDefault()
     const elInputSearch = document.querySelector('input[name=search]')
     console.log(elInputSearch.value)
-    mapService.geoSearch(elInputSearch.value)
-        .then(res => console.log(res))
 
-        // .then(pos => {
-        //     console.log('User search position is:', pos.coords);
-        //     mapService.setLocation(pos, , title)    
-        // })
-        // .catch(err => {
-        //     console.log('err!!!', err);
-        // })
+    mapService.geoSearch(elInputSearch.value)
+        .then(pos => { gLastPos = pos
+            mapService.setSearchLocation(pos,elInputSearch.value )})
+
+       
 }
 
 function onCopyLink(value){

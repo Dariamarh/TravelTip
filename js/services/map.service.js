@@ -6,6 +6,8 @@ export const mapService = {
     onClickMap,
     setLocation,
     geoSearch,
+    setSearchLocation,
+   
 
 }
 
@@ -19,7 +21,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             console.log('google available');
             gMap = new google.maps.Map(
                 document.querySelector('#map'), {
-                center: { lat, lng },
+                center: pos,
                 zoom: 15
             })
             console.log('Map!', gMap);
@@ -52,6 +54,18 @@ function setLocation(pos, title){
 
 }
 
+function setSearchLocation(pos, value){
+    const center = {
+        lat: pos.lat,
+        lng: pos.lng,
+      }
+      gMap.setCenter(center)
+      new google.maps.Marker({
+          position: center,
+          map: gMap,
+          title: value, 
+        })
+} 
 
 
 function addMarker(loc, title) {
@@ -86,8 +100,8 @@ function geoSearch(value) {
     console.log('Getting geolocation from search', value);
 
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${API_KEY}`)
-    .then(res => res.data)
+    .then(res => 
+        res.data.results[0].geometry.location)
 
 }
     
-
