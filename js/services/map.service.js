@@ -14,6 +14,7 @@ export const mapService = {
 var gMap;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
+    var pos={lat, lng}
     console.log('InitMap')
     
     return _connectGoogleApi()

@@ -26,6 +26,7 @@ function addLoc(loc, name) {
 }
 
 function _createLoc(pos, name) {
+  console.log(pos,'pos');
   return {
     id: utilService.makeId(),
     name,

@@ -92,5 +92,5 @@ function renderLocation(locations) {
         <button class="del-location-btn btn" onclick="onDeleteLocation('${loc.id}')">X</button>
     </li>`
     );
-    document.querySelector('.location-list').innerHTML = strHtml.join('');
+    document.querySelector('.locs').innerHTML = strHtml.join('');
 }
