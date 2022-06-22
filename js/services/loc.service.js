@@ -22,7 +22,7 @@ function getLocs() {
 }
 function addLoc(loc, name) {
   locs.push(_createLoc(loc, name))
-  storageService.save(LOCS_KEY, locs)
+  storageService.save(STORAGE_KEY, locs)
 }
 
 function _createLoc(pos, name) {
