@@ -1,4 +1,4 @@
-
+import { storageService } from './storage-service.js'
 
 export const mapService = {
     initMap,
@@ -12,7 +12,8 @@ export const mapService = {
 var gMap;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
+    console.log('InitMap')
+    
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
@@ -65,6 +66,7 @@ function addMarker(loc, title) {
 
 function _connectGoogleApi() {
     // const API_KEY = 'AIzaSyAkPIleVgYKpLNpxFBQ5blamIYW7YgdOM0'
+    
     const API_KEY = 'AIzaSyCfW4zSavY4AJeMwNyqMBVFWttBi1iHd9Q'
     if (window.google) return Promise.resolve()
     // const API_KEY = ''; //TODO: Enter your API Key

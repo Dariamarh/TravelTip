@@ -1,6 +1,7 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-import { storageService } from './services/util-service.js'
+import { storageService } from './services/storage-service.js'
+import { utilService } from './services/util-service.js'
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
@@ -74,9 +75,6 @@ function onSearch(ev){
         // })
 }
 
-
-
-
 function onCopyLink(value){
   
     /* Copy the text inside the text field */
@@ -85,4 +83,16 @@ function onCopyLink(value){
     /* Alert the copied text */
     alert("Copied the text: " + value);
 
+}
+
+function renderLocation(locations) {
+    const strHtml = locations.map(
+        (loc) =>
+            `<li class="list-item">
+        <p class="location-name" onclick="onPanTo(${loc.lat} ,${loc.lng})">${loc.name}</p> 
+            <button class="go-to-location-btn btn" onclick="onPanTo(${loc.lat},${loc.lng})">GO</button>
+        <button class="del-location-btn btn" onclick="onDeleteLocation('${loc.id}')">X</button>
+    </li>`
+    );
+    document.querySelector('.location-list').innerHTML = strHtml.join('');
 }

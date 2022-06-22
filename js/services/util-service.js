@@ -1,13 +1,11 @@
-export const storageService = {
-	saveToStorage,
-	loadFromStorage,
-}
 
-function saveToStorage(key, val) {
-    localStorage.setItem(key, JSON.stringify(val))
-}
-
-function loadFromStorage(key) {
-    const json = localStorage.getItem(key)
-    return JSON.parse(json)
+export const utilService = { makeId }
+function makeId(length = 6) {
+    const possible =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    var txt = ''
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+    return txt
 }
