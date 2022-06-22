@@ -3,6 +3,7 @@
 export const mapService = {
     initMap,
     addMarker,
+    onClickMap,
 
 }
 
@@ -19,7 +20,18 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 zoom: 15
             })
             console.log('Map!', gMap);
+            gMap.addListener("click", (e) => {
+                onClickMap (e.latLng)
+              })
         })
+       
+}
+
+function onClickMap(pos){
+    console.log('map clicked')
+    console.log(pos)
+    addMarker(pos)
+
 }
 
 function addMarker(loc) {
