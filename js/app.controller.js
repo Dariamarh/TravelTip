@@ -11,7 +11,7 @@ window.onGetUserPos = onGetUserPos;
 window.onSearch = onSearch
 window.onCopyLink = onCopyLink
 
-var gLastPos  
+var gLastPos
 
 function onInit() {
 
@@ -36,18 +36,19 @@ function onAddMarker() {
 }
 
 function onGetLocs() {
-    locService.getLocs()
+    var locs = locService.getLocs()
         .then(locs => {
-            console.log('Locations:', locs)                
+            console.log('Locations:', locs)
             document.querySelector('.locs').innerText = JSON.stringify(locs)
         })
+    renderLocation(locs)
 }
 
 function onGetUserPos() {
     getPosition()
         .then(pos => {
             console.log('your position is:', pos.coords);
-            mapService.setLocation(pos, 'You are here')    
+            mapService.setLocation(pos, 'You are here')
             document.querySelector('.user-pos').innerText =
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
         })
@@ -61,36 +62,42 @@ function onPanTo() {
 }
 
 
-function onSearch(ev){
+function onSearch(ev) {
     if (ev) ev.preventDefault()
     const elInputSearch = document.querySelector('input[name=search]')
     console.log(elInputSearch.value)
 
     mapService.geoSearch(elInputSearch.value)
-        .then(pos => { gLastPos = pos
-            mapService.setSearchLocation(pos,elInputSearch.value )})
+        .then(pos => {
+            gLastPos = pos
+            mapService.setSearchLocation(pos, elInputSearch.value)
+        })
 
-       
+
 }
 
-function onCopyLink(value){
-  
+function onCopyLink(value) {
+
     /* Copy the text inside the text field */
     navigator.clipboard.writeText(value);
-    
+
     /* Alert the copied text */
     alert("Copied the text: " + value);
 
 }
 
 function renderLocation(locations) {
-    const strHtml = locations.map(
+    var strHtml = locations.map(
         (loc) =>
-            `<li class="list-item">
-        <p class="location-name" onclick="onPanTo(${loc.lat} ,${loc.lng})">${loc.name}</p> 
-            <button class="go-to-location-btn btn" onclick="onPanTo(${loc.lat},${loc.lng})">GO</button>
-        <button class="del-location-btn btn" onclick="onDeleteLocation('${loc.id}')">X</button>
+            `<li class="flex space-between">
+        <p class="location-name">${loc.name}</p>
+        <p><span>CreatedAt</span> <span>${loc.createdAt}</span></p>
+                    <p><span>EditedAt</span> <span>${loc.updatedAt}</span></p>
+                    <p><span>Lat</span> <span>${loc.pos.lat}</span></p>
+                    <p><span>Lng</span> <span>${loc.pos.lng}</span></p> 
+            <button class="go-to-location-btn btn" onclick="onPanTo(${loc.lat},${loc.lng},'${loc.name}')">GO</button>
+        <button class="del-location-btn btn" onclick="deleteLoc('${loc.id}')">X</button>
     </li>`
     );
-    document.querySelector('.locs').innerHTML = strHtml.join('');
+    document.querySelector('.location-list').innerHTML = strHtml.join('');
 }

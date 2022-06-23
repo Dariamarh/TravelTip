@@ -1,0 +1,37 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.search {
+    margin: 20px;
+    text-align: center;
+}
+
+input {
+    width: 180px;
+    height: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 18px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 35px;
+}
+
+.btns {
+    display: inline;
+    width: 200px;
+    height: 50px;
+    max-width: 100%;
+    margin-bottom: 10px;
+    font-size: 15px;
+    text-align: center;
+    justify-items: center;
+}
+.btn-add-marker{
+    margin-bottom: 10px;
+   padding: 15px;
+}

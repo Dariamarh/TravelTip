@@ -37,7 +37,6 @@ function onClickMap(pos){
     console.log('map clicked')
     console.log(pos)
     addMarker(pos)
-
 }
 
 function setLocation(pos, title){
@@ -106,3 +105,9 @@ function geoSearch(value) {
 
 }
     
+function onPanTo({ lat, lng }) {
+  mapService.panTo(lat, lng)
+  mapService.addMarker({ lat, lng })
+
+ 
+}
